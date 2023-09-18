@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('home');
+Route::get('/charge-checkout', function (Request $request) {
+    $user = User::where('email','test@example.com')->first();
+    $userinfo = $user->checkoutCharge(1200, 'T-Shirt', 5);
+    // dd($userinfo);
+    return $userinfo;
 });
