@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{route('stripe-payment')}}" method="post">
-
+    <form action="{{route('stripe-payment')}}" method="POST" id="payment-form">
+    @csrf
         <!-- Stripe Elements Placeholder -->
         <div class="card col-md-6">
             <div class="form-group">
@@ -23,10 +23,11 @@
                 <input type="number" name="phone_number">
             </div>
             <input type="hidden" name="payment_token" id="payment_token">
+            <input type="hidden" name="card_last_4_digits" id="card_last_4_digits">
             
             <div id="card-element" class="col-md-2"></div>
             
-            <button id="card-button">
+            <button id="card-button" type="button">
                 Process Payment
             </button>
         </div>
@@ -61,6 +62,8 @@
             console.log(paymentMethod)
             alert(paymentMethod.id)
             document.getElementById('payment_token').value =paymentMethod.id;
+            document.getElementById('card_last_4_digits').value =paymentMethod.card.last4;
+            document.getElementById("payment-form").submit();
         }
     });
 </script>

@@ -31,9 +31,25 @@ Route::get('/verify-card',function(){
 
 // payment on stripe
 Route::post('stripe-payment',function(Request $request){
-    dd($request->all());
+    // dd($request->all());
+    $stripeCharge = $request->user()->charge(
+        1000, $request->payment_token
+    );
+    $user_card_last_4_digits = $request->card_last_4_digits;
+    $user_name = $request->name;
+    $user_email = $request->email;
+    $user_phone_number = $request->phone_number;
+    $user_payment_token =$stripeCharge->id;
+    dd($stripeCharge->id);
+    // $request->refund($stripeCharge->id);
+    return redirect()->route('home');
 })->name('stripe-payment');
 
+// payment refund method
+Route::get('payment-refund',function(Request $request){
+    $user_payment_token = 'pi_3NrlibAR3cNX0XKI1Q8JwXbr';
+    $request->user()->refund($user_payment_token);
+});
 
 Route::get('/charge-checkout', function (Request $request) {
     $user = User::where('email','test@example.com')->first();
