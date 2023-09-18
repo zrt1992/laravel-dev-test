@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Stripe\Checkout\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +19,34 @@ use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/verify-card',function(){
+    return view('varify-card');
+})->name('verify-card');
+
+// payment on stripe
+Route::post('stripe-payment',function(Request $request){
+    dd($request->all());
+})->name('stripe-payment');
+
+
 Route::get('/charge-checkout', function (Request $request) {
     $user = User::where('email','test@example.com')->first();
-    $userinfo = $user->checkoutCharge(1200, 'T-Shirt', 5);
+    $userinfo = $user->checkoutCharge(100, 'O-Neil-Shoes', 1);
     // dd($userinfo);
     return $userinfo;
 });
+
+Route::get('/checkout-success', function (Request $request) {
+    $checkoutSession = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
+    dd($checkoutSession);
+    return view('welcome');
+})->name('checkout-success');
+Route::get('/checkout-cancel', function () {
+    return view('welcome');
+})->name('checkout-cancel');
