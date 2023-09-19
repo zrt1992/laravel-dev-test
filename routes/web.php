@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Stripe\Checkout\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,24 +31,12 @@ Auth::routes();
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
-Route::get('/verify-card',function(){
-    return view('varify-card');
-})->name('verify-card');
+Route::get('/process-payment/{product}',[App\Http\Controllers\OrdersController::class,'order'])->name('verify-card');
 
 // payment on stripe
 Route::post('stripe-payment',function(Request $request){
     // dd($request->all());
-    $stripeCharge = $request->user()->charge(
-        1000, $request->payment_token
-    );
-    $user_card_last_4_digits = $request->card_last_4_digits;
-    $user_name = $request->name;
-    $user_email = $request->email;
-    $user_phone_number = $request->phone_number;
-    $user_payment_token =$stripeCharge->id;
-    dd($stripeCharge->id);
-    // $request->refund($stripeCharge->id);
-    return redirect()->route('home');
+    
 })->name('stripe-payment');
 
 // payment refund method

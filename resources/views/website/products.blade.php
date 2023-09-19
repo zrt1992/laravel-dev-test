@@ -10,9 +10,12 @@
             </h5>
             <div class="d-flex justify-content-between align-items-center">
                 <h5>
-                    <span class="text-primary">Price :</span> {{$product->price}}
+                    <span class="text-primary">Price :</span> {{$product->price}} {{$product->currency}}
                 </h5>
-                <button class="btn btn-success">Buy</button>
+                <h5>
+                    <span class="text-primary">Type :</span> {{$product->type}}
+                </h5>
+                <a class="btn btn-success" href="{{route('verify-card',$product->id)}}">Buy</a>
             </div>
         </div>
     @endforeach

@@ -5,29 +5,53 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <form action="{{route('stripe-payment')}}" method="POST" id="payment-form">
-                @csrf
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input id="card-holder-name" class="form-control" type="text" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">email</label>
-                        <input type="email" name="email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Phone number</label>
-                        <input type="number" name="phone_number" class="form-control">
-                    </div>
+                <div class="container d-flex justify-content-between border rounded shadow flex-wrap">
+                    <form class="col-4 d-flex flex-column p-3 pt-4" action="{{route('stripe-payment')}}" method="POST" id="payment-form">
+                    @csrf
+                    <h2>Personal Information</h2>
+                    <label for="name" class="mb-2 mt-3">Name</label>
+                    <input name="name"
+                        type="text"
+                        placeholder="Enter Your Name"
+                        class="mb-2 rounded-pill p-2 shadow"
+                        style="outline: none !important"
+                    />
+                    <label for="email" class="mb-2">Email</label>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="Enter Your Email"
+                        class="mb-2 rounded-pill p-2 shadow"
+                        style="outline: none !important"
+                    />
+                    <label for="phoneNumber" class="mb-2">Phone Number</label>
+                    <input
+                        name="phone_number"
+                        type="text"
+                        placeholder="Enter Your Phone Number"
+                        class="mb-2 rounded-pill p-2 shadow"
+                        style="outline: none !important"
+                    />
                     <input type="hidden" name="payment_token" id="payment_token">
                     <input type="hidden" name="card_last_4_digits" id="card_last_4_digits">
-                    
-                    <div id="card-element"></div>
-                    
-                    <button id="card-button" type="button">
-                        Process Payment
-                    </button>
-                </form>
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <div class="mt-3">
+                        <h2>Card Information</h2>
+                        <div id="card-element" class="mt-3"></div>
+                        <button class="btn w-25 rounded btn-primary mt-5 rounded-pill">
+                        Pay
+                        </button>
+                    </div>
+                    </form>
+                
+                    <div class="col-4 d-flex flex-column p-3 pt-4">
+                    <h2>Product Information</h2>
+                    <img src="{{Vite::asset('resources/images/p_1.png')}}" alt="" class="h-50 rounded mt-3" />
+                    <h6 class="mt-3">Name : {{$product->name}}</h6>
+                    <h6 class="mt-3">Price : {{$product->price}} {{$product->currency}}</h6>
+                    <h6 class="mt-3">Type : {{$product->type}}</h6>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
