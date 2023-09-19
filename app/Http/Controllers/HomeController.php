@@ -23,6 +23,6 @@ class HomeController extends Controller
     public function products()
     {
         $products = Product::get();
-        return view('website.products',compact('products'));
+        return view('website.products', compact('products'));
     }
 }

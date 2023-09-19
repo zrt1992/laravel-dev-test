@@ -24,19 +24,12 @@ Route::get('/products', [App\Http\Controllers\HomeController::class, 'products']
 
 
 Route::group(['middleware' => ['auth','role:admin']], function () {
-
-    Route::get('/home',function(Request $request){
-        \Illuminate\Support\Facades\Event::dispatch(new \App\Events\SendUserMail(2));
-        dd('home');
-
-    })->name('asdasdasd');
-
-
+    Route::get('/home', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.home');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
 Route::get('/verify-card',function(){
