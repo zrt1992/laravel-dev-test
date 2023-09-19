@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="{{route('stripe-payment')}}" method="POST" id="payment-form">
-    @csrf
-        <!-- Stripe Elements Placeholder -->
-        <div class="card col-md-6">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input id="card-holder-name" class="form-control" type="text" name="name">
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <form action="{{route('stripe-payment')}}" method="POST" id="payment-form">
+                @csrf
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="card-holder-name" class="form-control" type="text" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">email</label>
+                        <input type="email" name="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Phone number</label>
+                        <input type="number" name="phone_number" class="form-control">
+                    </div>
+                    <input type="hidden" name="payment_token" id="payment_token">
+                    <input type="hidden" name="card_last_4_digits" id="card_last_4_digits">
+                    
+                    <div id="card-element"></div>
+                    
+                    <button id="card-button" type="button">
+                        Process Payment
+                    </button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="name">email</label>
-                <input type="email" name="email">
-            </div>
-            <div class="form-group">
-                <label for="name">Phone number</label>
-                <input type="number" name="phone_number">
-            </div>
-            <input type="hidden" name="payment_token" id="payment_token">
-            <input type="hidden" name="card_last_4_digits" id="card_last_4_digits">
-            
-            <div id="card-element" class="col-md-2"></div>
-            
-            <button id="card-button" type="button">
-                Process Payment
-            </button>
         </div>
-    </form>
-</body>
-</html>
+    </div>
+</div>
 <script src="https://js.stripe.com/v3/"></script>
  
 <script>
@@ -67,3 +65,4 @@
         }
     });
 </script>
+@endsection

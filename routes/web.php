@@ -20,10 +20,12 @@ use Stripe\Checkout\Session;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');
+
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::get('/verify-card',function(){
     return view('varify-card');
