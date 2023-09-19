@@ -24,15 +24,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456')
         ]);
         $admin->assignRole('admin');
-        \App\Models\User::factory()->create([
+        $user = \App\Models\User::factory()->create([
             'name' => 'B2C',
             'email' => 'b2b@b2b.com',
             'password' => Hash::make('123456')
         ]);
-        \App\Models\User::factory()->create([
+        $user->assignRole('customer');
+        $user = \App\Models\User::factory()->create([
             'name' => 'B2B',
             'email' => 'b2c@b2c.com',
             'password' => Hash::make('123456')
         ]);
+        $user->assignRole('customer');
     }
 }

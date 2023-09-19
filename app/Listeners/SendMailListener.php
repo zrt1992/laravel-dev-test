@@ -20,17 +20,12 @@ class SendMailListener
     }
 
     /**
-     * Handle the event.
+     * @param Cancellation $event
+     * @return void
      */
     public function handle(Cancellation $event): void
     {
         $user = User::find($event->userId)->toArray();
-        Mail::send(new CancellationEmail($user), $user, function($message) use ($user) {
-
-            $message->to($user['email']);
-
-            $message->subject('Event Testing');
-
-        });
+        Mail::to($user['email'])->send(new CancellationEmail($user));
     }
 }

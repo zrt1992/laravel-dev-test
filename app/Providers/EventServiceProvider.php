@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Events\Cancellation;
+use App\Events\Payment;
+use App\Listeners\OrderListener;
+use App\Listeners\PaymentListener;
 use App\Listeners\SendMailFired;
+use App\Listeners\SendMailListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,7 +25,10 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         Cancellation::class => [
-            SendMailFired::class
+            SendMailListener::class
+        ],
+        Payment::class => [
+            PaymentListener::class
         ],
     ];
 

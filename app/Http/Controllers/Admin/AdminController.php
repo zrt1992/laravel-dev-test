@@ -15,15 +15,24 @@ class AdminController extends Controller
      */
     function index(Request $request)
     {
-        $users = User::get();
+        $users = User::whereHas('roles', function ($q) {
+            $q->where('name', 'customer');
+        })->get();
         return view('admin.index', compact('users'));
     }
 
-    function denyAccess(User $user){
-//        $user->is_admin_approve = false;
-//        $user->save();
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    function denyAccess(User $user)
+    {
+        $user->is_admin_approve = false;
+        $user->save();
+        /**
+         * this event is to cancel the access of user. to make it scaleable we can implement queues here.
+         */
         Cancellation::dispatch($user->id);
-
         return redirect()->back();
     }
 }

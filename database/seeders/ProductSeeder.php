@@ -16,7 +16,6 @@ class ProductSeeder extends Seeder
         $data = [
             ['name'=>'Product 1', 'type'=> 'B2B','price' => 50,'currency' => 'usd'],
             ['name'=>'Product 2', 'type'=> 'B2C','price' => 30,'currency' => 'usd'],
-            //...
         ];
         Product::insert($data);
     }

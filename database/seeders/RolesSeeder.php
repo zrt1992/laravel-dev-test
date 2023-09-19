@@ -18,5 +18,6 @@ class RolesSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'B2B']);
         Role::create(['name' => 'B2C']);
+        Role::create(['name' => 'customer']);
     }
 }
