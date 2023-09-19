@@ -12,13 +12,14 @@ use Illuminate\Queue\SerializesModels;
 class CancellationEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -37,7 +38,7 @@ class CancellationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mails.cancel_email',
         );
     }
 
