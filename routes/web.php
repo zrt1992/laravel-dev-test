@@ -16,10 +16,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'products'])->name('products');
 
 
 Route::group(['middleware' => ['auth','role:admin']], function () {
@@ -27,37 +24,13 @@ Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('/denyAccess/{user}', [App\Http\Controllers\Admin\AdminController::class, 'denyAccess'])->name('deny-access-control');
 });
 
-Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-
-
 Route::get('/process-payment/{product}',[App\Http\Controllers\OrdersController::class,'order'])->name('verify-card');
 
 // payment on stripe
-Route::post('stripe-payment',function(Request $request){
-    // dd($request->all());
-    
-})->name('stripe-payment');
+Route::post('stripe-payment',[App\Http\Controllers\OrdersController::class,'placeOrder'])->name('stripe-payment');
 
 // payment refund method
 Route::get('payment-refund',function(Request $request){
     $user_payment_token = 'pi_3NrlibAR3cNX0XKI1Q8JwXbr';
     $request->user()->refund($user_payment_token);
 });
-
-Route::get('/charge-checkout', function (Request $request) {
-    $user = User::where('email','test@example.com')->first();
-    $userinfo = $user->checkoutCharge(100, 'O-Neil-Shoes', 1);
-    // dd($userinfo);
-    return $userinfo;
-});
-
-Route::get('/checkout-success', function (Request $request) {
-    $checkoutSession = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
-    dd($checkoutSession);
-    return view('welcome');
-})->name('checkout-success');
-Route::get('/checkout-cancel', function () {
-    return view('welcome');
-})->name('checkout-cancel');
