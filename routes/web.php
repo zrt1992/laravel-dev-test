@@ -23,11 +23,18 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth','role:admin']], function () {
 
+    Route::get('/home',function(Request $request){
+        \Illuminate\Support\Facades\Event::dispatch(new \App\Events\SendUserMail(2));
+        dd('home');
+
+    })->name('asdasdasd');
+
+
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/verify-card',function(){
     return view('varify-card');
