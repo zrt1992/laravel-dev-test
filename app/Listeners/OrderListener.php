@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendMailFired
+class OrderListener
 {
     /**
      * Create the event listener.
@@ -24,10 +24,10 @@ class SendMailFired
      */
     public function handle(Cancellation $event): void
     {
-        $user = User::find($event->userId)->toArray();
-        Mail::send(new CancellationEmail($user), $user, function($message) use ($user) {
+        $order = $event->order;
+        Mail::send(new CancellationEmail($event->order), $order, function($message) use ($user) {
 
-            $message->to($user['email']);
+            $message->to($order->user());
 
             $message->subject('Event Testing');
 
