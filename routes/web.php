@@ -25,6 +25,7 @@ Route::get('/products', [App\Http\Controllers\HomeController::class, 'products']
 
 Route::group(['middleware' => ['auth','role:admin']], function () {
     Route::get('/home', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.home');
+    Route::get('/denyAccess/{user}', [App\Http\Controllers\Admin\AdminController::class, 'denyAccess'])->name('deny-access-control');
 });
 
 Auth::routes();
