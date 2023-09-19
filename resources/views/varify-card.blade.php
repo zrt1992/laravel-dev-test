@@ -89,13 +89,13 @@
     
         if (error) {
             // Display "error.message" to the user...
+            alert('Card verification failed.');
         } else {
             // The card has been verified successfully...
-            console.log(paymentMethod)
-            alert(paymentMethod.id)
-            document.getElementById('payment_token').value =paymentMethod.id;
-            document.getElementById('card_last_4_digits').value =paymentMethod.card.last4;
-            document.getElementById("payment-form").submit();
+                alert('Card has been varified.proceeding to payment');
+                document.getElementById('payment_token').value =paymentMethod.id;
+                document.getElementById('card_last_4_digits').value =paymentMethod.card.last4;
+                document.getElementById("payment-form").submit();
         }
     });
 </script>
