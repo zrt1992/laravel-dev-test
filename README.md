@@ -21,3 +21,6 @@ There are following things that I couldn't implement since I had only 16 hours
 2. email = 'b2b@b2b.com' password = '123456'
 3. email = b2c@b2c.com' password = '123456'
 
+Final thoughts
+There were many improvements that i could have done in terms of scalability and performance. Like scaling events using messaging queues and securing urls parameters using encryption but that would have required a lot of time.
+
