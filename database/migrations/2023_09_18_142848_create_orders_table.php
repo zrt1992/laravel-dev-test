@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('product_id')->references('id')->on('products');
+            $table->integer('qantity')->default(0);
+            $table->string('payment_reference')->nullable();
+            $table->float('total')->default(0);
+            $table->integer('card_number')->default(0000);
             $table->timestamps();
         });
     }

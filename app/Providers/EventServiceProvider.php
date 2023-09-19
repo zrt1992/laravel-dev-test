@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\SendUserMail;
+use App\Events\Cancellation;
 use App\Listeners\SendMailFired;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SendUserMail::class => [
+        Cancellation::class => [
             SendMailFired::class
         ],
     ];

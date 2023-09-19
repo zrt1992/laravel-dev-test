@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\SendUserMail;
+use App\Events\Cancellation;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class AdminController extends Controller
     function denyAccess(User $user){
 //        $user->is_admin_approve = false;
 //        $user->save();
-        SendUserMail::dispatch($user->id);
+        Cancellation::dispatch($user->id);
 
         return redirect()->back();
     }

@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SendUserMail;
+use App\Events\Cancellation;
 use App\Mail\CancellationEmail;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -22,7 +22,7 @@ class SendMailFired
     /**
      * Handle the event.
      */
-    public function handle(SendUserMail $event): void
+    public function handle(Cancellation $event): void
     {
         $user = User::find($event->userId)->toArray();
         Mail::send(new CancellationEmail($user), $user, function($message) use ($user) {
